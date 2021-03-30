@@ -18,16 +18,31 @@
         </ul>
     </div>
     <div class="child-nav">
-        <ul class="list-nav">
-            <li class="item-nav">
-                Keranjang:
-            </li>
-            <li class="item-nav">
-                <a href="signin.php" class="nav-brand-auth-masuk">Masuk</a>
-            </li>
-            <li class="item-nav">
-                <a href="signup.php" class="nav-brand-auth">Daftar</a>
-            </li>
-        </ul>
+        <?php if (isset($_SESSION["signin"])) : ?>
+            <ul class="list-nav">
+                <li class="item-nav">
+                    Keranjang: <span id="count-cart"></span>
+                </li>
+                <li class="item-nav">
+                    <a href="logout.php" class="nav-brand-auth-masuk">Logout</a>
+                </li>
+                <li class="item-nav">
+                    <h3><?= $_SESSION["username"]; ?></h3>
+                </li>
+            </ul>
+        <?php endif; ?>
+        <?php if (!isset($_SESSION["signin"])) : ?>
+            <ul class="list-nav">
+                <li class="item-nav">
+                    Keranjang: <span id="count-cart"></span>
+                </li>
+                <li class="item-nav">
+                    <a href="signin.php" class="nav-brand-auth-masuk">Masuk</a>
+                </li>
+                <li class="item-nav">
+                    <a href="signup.php" class="nav-brand-auth-masuk">Daftar</a>
+                </li>
+            </ul>
+        <?php endif; ?>
     </div>
 </nav>

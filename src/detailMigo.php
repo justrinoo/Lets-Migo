@@ -1,7 +1,13 @@
 <?php
+session_start();
+
 require "../app.php";
+
 $id = $_GET["productId"];
+
 $migoDetail = queryData("SELECT * FROM products WHERE id_migo = $id")[0];
+
+
 
 ?>
 <!DOCTYPE html>
@@ -14,6 +20,12 @@ $migoDetail = queryData("SELECT * FROM products WHERE id_migo = $id")[0];
 
     <link rel="stylesheet" href="./assets/css/style_detail.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+
+    <style>
+        .hidden {
+            visibility: hidden;
+        }
+    </style>
 
     <title>Lets Migo</title>
 </head>
@@ -31,18 +43,31 @@ $migoDetail = queryData("SELECT * FROM products WHERE id_migo = $id")[0];
                 <h2 class="title-detail"><?= $migoDetail["nama"]; ?></h2>
                 <p class="paragraph-detail"><?= $migoDetail["deskripsi"]; ?></p>
                 <div class="quantity-detail">
-                    <h4>Quantity</h4>
+                    <h4>Stock</h4>
                     <div class="parent-qty">
-                        <button class="btn-qty" type="button">+</button>
-                        <span style="margin: 5px 5px;">1</span>
-                        <button class="btn-qty" type="button">-</button>
+                        <button type="button" id="handleplus">+</button>
+                        <span class="counter-display">0</span>
+                        <button type="button" id="handlemin">-</button>
                     </div>
-                    <h3 style="margin-top: 20px;">Rp. <?= $migoDetail["harga"]; ?></h3>
-                    <button type="submit" class="btn-tocart">Tambahkan Keranjang</button>
+                    <div style="display: flex;">
+                        <span style="margin-top: 22px; font-weight: bold;">Rp.</span>
+                        <h3 style="margin-top: 20px;" id="harga"><?= $migoDetail["harga"]; ?></h3>
+                    </div>
+                    <?php if (isset($_SESSION["signin"])) : ?>
+                        <button type="submit" class="btn-tocart" name="cart">Tambahkan Keranjang</button>
+                        <a href="cart.php?cartId=<?= $migoDetail["id_migo"]; ?>">Check Cart</a>
+                    <?php endif; ?>
+                    <?php if (!isset($_SESSION["signin"])) : ?>
+                        <button type="submit" class="btn-tocart" name="cart">Login Dulu!</button>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </section>
+
+    <script src="./assets/js/counter.js">
+
+    </script>
 </body>
 
 </html>

@@ -1,3 +1,22 @@
+<?php
+require('../app.php');
+
+if (isset($_POST["signup"])) {
+    if (signup($_POST) > 0) {
+        echo "
+        <script>
+          alert('User Berhasil Ditambahkan!');
+        document.location.href = 'signin.php';
+        </script>
+    ";
+    }
+} else {
+    echo mysqli_error($dbconnect);
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +36,8 @@
     <div class="container">
         <div class="card">
             <h2 style="text-align: center;">Silahkan Daftar Terlebih Dahulu</h2>
-            <form action="">
+            <??>
+            <form action="" method="POST">
                 <div class="parent">
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" class="input-control" placeholder="Jhon Doe">
@@ -34,6 +54,11 @@
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email" class="input-control" placeholder="email@mail.com">
                 </div>
+                <div class="parent">
+                    <label for="umur">Umur</label>
+                    <input type="number" name="umur" id="umur" class="input-control" placeholder="17">
+                </div>
+
                 <div class="parent-btn">
                     <button type="submit" name="signup" class="btn-signup">Sign Up</button>
                     <p style="margin-top: 13px; margin-left: 20px;">Sudah punya akun? <a href="signin.php" style="text-decoration: none; color: blue;">Login disini</a></p>

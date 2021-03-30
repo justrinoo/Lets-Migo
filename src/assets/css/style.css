@@ -72,6 +72,9 @@
 	width: 10px;
 	padding: 16px;
 }
+.detail-cart {
+	display: flex;
+}
 .footer {
 	padding: 10px;
 	background: black;

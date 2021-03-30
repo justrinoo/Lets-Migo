@@ -1,3 +1,35 @@
+<?php
+require("../app.php");
+
+// start session
+session_start();
+if (isset($_SESSION["signin"])) {
+    // jika session nya tidak ada
+    header("Location: index.php");
+    // echo "SESSION NYA TIDAK ADA!";
+}
+
+if (isset($_POST["signin"])) {
+
+    // logic login disini
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $refresh = header("Location: signin.php");
+
+    $result = mysqli_query($dbconnect, "SELECT * FROM users WHERE nama = '$username'");
+
+    if (mysqli_num_rows($result) === 1) {
+        $row = mysqli_fetch_assoc($result);
+        if (password_verify($password, $row["password"])) {
+            $_SESSION["signin"] = true;
+            $_SESSION["username"] = $username;
+            header("Location: index.php");
+        }
+    }
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +50,8 @@
         <div class="card">
             <h4 style="text-align: center;"><a href="index.php" style="text-decoration: none; color: #000;">Lets Migo</a></h4>
             <h2 style="text-align: center;">Login Dulu</h2>
-            <form action="">
+
+            <form action="" method="POST">
                 <div class="parent">
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" class="input-control" placeholder="Jhon Doe">
@@ -29,7 +62,7 @@
                 </div>
 
                 <div class="parent-btn">
-                    <button type="submit" name="signup" class="btn-signup">Login</button>
+                    <button type="submit" name="signin" class="btn-signup">Login</button>
                     <p style="margin-top: 13px; margin-left: 20px;">Belum punya akun? <a href="signup.php" style="text-decoration: none; color: blue;">Daftar disini</a></p>
                 </div>
             </form>

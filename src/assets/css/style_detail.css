@@ -29,13 +29,3 @@
 	width: 11%;
 	display: flex;
 }
-.btn-tocart {
-	margin-top: 20px;
-	width: 100%;
-	border: none;
-	background: cornflowerblue;
-	color: #ffff;
-	border-radius: 20px;
-	padding: 10px 0px 10px 0px;
-	cursor: pointer;
-}
