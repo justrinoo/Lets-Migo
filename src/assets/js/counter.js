@@ -34,5 +34,3 @@ btnCart.addEventListener("click", function () {
 function updateCount() {
 	counterDisplay.innerHTML = count;
 }
-
-function updateCart() {}

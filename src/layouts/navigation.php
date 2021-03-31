@@ -27,7 +27,7 @@
                     <a href="logout.php" class="nav-brand-auth-masuk">Logout</a>
                 </li>
                 <li class="item-nav">
-                    <h3><?= $_SESSION["username"]; ?></h3>
+                    <h3><?= $_SESSION["username"]; ?> <small>(<?= $_SESSION["level"]; ?>)</small></h3>
                 </li>
             </ul>
         <?php endif; ?>

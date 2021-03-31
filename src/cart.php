@@ -1,9 +1,7 @@
 <?php
 session_start();
 require("../app.php");
-$id = $_GET["cartId"];
-
-$migoDetail = queryData("SELECT * FROM products WHERE id_migo = $id")[0];
+print_r($_SESSION['keranjang']);
 
 require("./layouts/header.php");
 require("./layouts/navigation.php");
@@ -15,7 +13,7 @@ require("./layouts/navigation.php");
 
     <div style="display: flex; justify-content: space-between;">
         <div>
-            <img src="./assets/images/<?= $cartDetail["image"]; ?>" alt="">
+            <img src="./assets/images/<?= $migoDetail["image"]; ?>" alt="">
         </div>
         <div>2</div>
     </div>

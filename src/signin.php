@@ -16,14 +16,25 @@ if (isset($_POST["signin"])) {
     $password = $_POST["password"];
     $refresh = header("Location: signin.php");
 
-    $result = mysqli_query($dbconnect, "SELECT * FROM users WHERE nama = '$username'");
+    $result = mysqli_query($dbconnect, "SELECT * FROM users WHERE username = '$username' ");
 
     if (mysqli_num_rows($result) === 1) {
         $row = mysqli_fetch_assoc($result);
         if (password_verify($password, $row["password"])) {
-            $_SESSION["signin"] = true;
-            $_SESSION["username"] = $username;
-            header("Location: index.php");
+            // cek role masing masing user
+            if ($row["level"] === "penjual") {
+                $_SESSION["username"] = $username;
+                $_SESSION["level"] = "penjual";
+                $_SESSION["signin"] = true;
+                header("Location: admin.php");
+            } else if ($row["level"] === "pembeli") {
+                $_SESSION["username"] = $username;
+                $_SESSION["level"] = "pembeli";
+                $_SESSION["signin"] = true;
+                header("Location: index.php");
+            } else {
+                header("Location: signin.php");
+            }
         }
     }
 }

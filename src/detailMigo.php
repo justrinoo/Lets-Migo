@@ -7,8 +7,6 @@ $id = $_GET["productId"];
 
 $migoDetail = queryData("SELECT * FROM products WHERE id_migo = $id")[0];
 
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,11 +52,11 @@ $migoDetail = queryData("SELECT * FROM products WHERE id_migo = $id")[0];
                         <h3 style="margin-top: 20px;" id="harga"><?= $migoDetail["harga"]; ?></h3>
                     </div>
                     <?php if (isset($_SESSION["signin"])) : ?>
-                        <button type="submit" class="btn-tocart" name="cart">Tambahkan Keranjang</button>
-                        <a href="cart.php?cartId=<?= $migoDetail["id_migo"]; ?>">Check Cart</a>
+                        <a href="beli.php?id=<?= $migoDetail["id_migo"]; ?>">Beli</a>
+
                     <?php endif; ?>
                     <?php if (!isset($_SESSION["signin"])) : ?>
-                        <button type="submit" class="btn-tocart" name="cart">Login Dulu!</button>
+                        <a href="signin.php" class="btn-tocart">Login Dulu!</a>
                     <?php endif; ?>
                 </div>
             </div>

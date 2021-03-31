@@ -28,7 +28,7 @@ function signup($data)
     $no_telp = htmlspecialchars($data["no_telp"]);
     $umur = htmlspecialchars($data["umur"]);
 
-    $query = "SELECT * FROM users WHERE nama = '$username'";
+    $query = "SELECT * FROM users WHERE username = '$username'";
     $resultNama =  mysqli_query($dbconnect, $query);
 
 

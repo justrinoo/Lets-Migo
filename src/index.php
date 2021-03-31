@@ -2,6 +2,18 @@
 session_start();
 
 
+if (!isset($_SESSION["signin"])) {
+    // jika session nya tidak ada
+    header("Location: signin.php");
+    // echo "SESSION NYA TIDAK ADA!";
+}
+$level = $_SESSION["level"];
+
+
+if ($level !== "pembeli") {
+    echo "<script>alert('You cannot permission!');</script>";
+    echo "<script>location='admin.php'</script>";
+}
 require_once("../app.php");
 
 $productMigo = queryData("SELECT * FROM products");
