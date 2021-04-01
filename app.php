@@ -27,7 +27,6 @@ function signup($data)
     $email = htmlspecialchars($data["email"]);
     $no_telp = htmlspecialchars($data["no_telp"]);
     $umur = htmlspecialchars($data["umur"]);
-
     $query = "SELECT * FROM users WHERE username = '$username'";
     $resultNama =  mysqli_query($dbconnect, $query);
 
@@ -41,6 +40,7 @@ function signup($data)
         return false;
     }
 
+
     if (empty($username)) {
         echo "Username tidak boleh kosong";
     } else if (empty($password)) {
@@ -51,12 +51,37 @@ function signup($data)
         echo "no telphone tidak boleh kosong";
     } else if (empty($umur)) {
         echo "umur tidak boleh kosong";
-    } else {
-        $password = password_hash($password, PASSWORD_DEFAULT);
-        $query = "INSERT INTO users VALUES (id,'$username', '$password', '$email', '$no_telp', 2, '$umur')";
-        mysqli_query($dbconnect, $query);
-        return mysqli_affected_rows($dbconnect);
     }
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    $query = "INSERT INTO users VALUES (id,'$username', '$password', '$email', '$no_telp', 'pembeli', $umur)";
+    mysqli_query($dbconnect, $query);
+    return mysqli_affected_rows($dbconnect);
+}
+function createAdmin($data)
+{
+
+    global $dbconnect;
+    $username = strtolower(stripslashes($data["username"]));
+    $password = mysqli_real_escape_string($dbconnect, $data["password"]);
+    $email = htmlspecialchars($data["email"]);
+    $no_telp = htmlspecialchars($data["no_telp"]);
+    $umur = htmlspecialchars($data["umur"]);
+
+    if (empty($username)) {
+        echo "Username tidak boleh kosong";
+    } else if (empty($password)) {
+        echo "Password tidak boleh kosong";
+    } else if (empty($email)) {
+        echo "Email tidak boleh kosong";
+    } else if (empty($no_telp)) {
+        echo "no telphone tidak boleh kosong";
+    } else if (empty($umur)) {
+        echo "umur tidak boleh kosong";
+    }
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    $query = "INSERT INTO users VALUES (id,'$username', '$password', '$email', '$no_telp', 'penjual', $umur)";
+    mysqli_query($dbconnect, $query);
+    return mysqli_affected_rows($dbconnect);
 }
 
 function createProduct($data)
