@@ -62,11 +62,11 @@ function signup($data)
 function createProduct($data)
 {
     global $dbconnect;
-    $nama = $data["nama"];
-    $harga = $data["harga"];
+    $nama = htmlspecialchars($data["nama"]);
+    $harga = htmlspecialchars($data["harga"]);
     $image = uploadImage();
-    $stock = $data["stock"];
-    $deskripsi = $data["deskripsi"];
+    $stock = htmlspecialchars($data["stock"]);
+    $deskripsi = htmlspecialchars($data["deskripsi"]);
 
     if (!$image) {
         return false;
@@ -90,10 +90,10 @@ function uploadImage()
      * 5. dll
      *  */
 
-    $namaFileImage = $_FILES["image"]["name"];
-    $ukuranFileImage = $_FILES["image"]["size"];
-    $error = $_FILES["image"]["error"];
-    $tmpName = $_FILES["image"]["tmp_name"];
+    $namaFileImage = $_FILES["gambar"]["name"];
+    $ukuranFileImage = $_FILES["gambar"]["size"];
+    $error = $_FILES["gambar"]["error"];
+    $tmpName = $_FILES["gambar"]["tmp_name"];
 
     // ketika gambarnya(file form) nya kosong
     if ($error === 4) {
@@ -137,4 +137,34 @@ function uploadImage()
     // ketika filenya berhasil lolos semua validasi
     move_uploaded_file($tmpName, 'assets/images/' . $newFileImage);
     return $newFileImage;
+}
+
+function editProduct($data)
+{
+    global $dbconnect;
+    $id = $data["id_migo"];
+    $nama = htmlspecialchars($data["nama"]);
+    $harga = htmlspecialchars($data["harga"]);
+    $stock = htmlspecialchars($data["stock"]);
+    $deskripsi = htmlspecialchars($data["deskripsi"]);
+    $gambarLama = htmlspecialchars($data["gambar"]);
+    // tidak ada file yang di upload
+    if ($_FILES["gambar"]["error"] === 4) {
+        $gambar = $gambarLama;
+    } else {
+        $gambar = uploadImage();
+    }
+
+    $queryUpdateProduct = "UPDATE  products SET nama='$nama', harga='$harga', stock='$stock', deskripsi='$deskripsi', gambar='$gambar' WHERE id_migo = $id";
+
+    mysqli_query($dbconnect, $queryUpdateProduct);
+    return mysqli_affected_rows($dbconnect);
+}
+
+function deleteProduct($id)
+{
+    global $dbconnect;
+
+    mysqli_query($dbconnect, "DELETE FROM products WHERE id_migo = $id");
+    return mysqli_affected_rows($dbconnect);
 }

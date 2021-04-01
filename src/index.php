@@ -35,7 +35,7 @@ require_once("../src/layouts/navigation.php");
 
                 <div class=" card-favorite-migo">
                     <a href="detailMigo.php?productId=<?= $migo["id_migo"]; ?>">
-                        <img src="./assets/images/<?= $migo["image"]; ?>" width="100%" alt="" style="border: 1px solid #ddd; border-radius: 5px;">
+                        <img src="./assets/images/<?= $migo["gambar"]; ?>" width="100%" alt="" style="border: 1px solid #ddd; border-radius: 5px;">
                     </a>
                     <div style="padding: 10px; display: flex; align-items: center;justify-content: space-between;">
                         <h3><?= $migo["nama"]; ?></h3>
@@ -54,8 +54,3 @@ require_once("../src/layouts/navigation.php");
 
     </div>
 </section>
-
-
-<?php
-require_once("../src/layouts/footer.php");
-?>

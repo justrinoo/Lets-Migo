@@ -1,6 +1,6 @@
 <?php
-require('../app.php');
 session_start();
+require('../app.php');
 
 if (!isset($_SESSION["signin"])) {
     // jika session nya tidak ada
@@ -8,29 +8,39 @@ if (!isset($_SESSION["signin"])) {
     // echo "SESSION NYA TIDAK ADA!";
 }
 
-if (isset($_POST["product"])) {
-    if (createProduct($_POST) > 0) {
+if (isset($_POST["editProduct"])) {
+    if (editProduct($_POST) > 0) {
         echo "
             <script>
-                alert('Success Create a Product!');
+                alert('Yeayy, Success Edit a Product');
                 location='admin.php';
             </script>
         ";
     } else {
-        echo mysqli_error($dbconnect);
+        echo "
+        <script>
+            alert('Hemm, Failed Edit a Product :(');
+            location='edit-admin.php';
+        </script>
+    ";
     }
 }
 
-$product = queryData("SELECT * FROM products");
 
 $level = $_SESSION["level"];
 
 if ($level !== "penjual") {
     echo "<script>alert('You cannot permission!');</script>";
-    echo "<script>location='index.php'</script>";
+    header('Location: edit.php?id=<?= $_GET["id"];?>');
 }
 
+$id = $_GET["id"];
+
+$detail = queryData("SELECT * FROM products WHERE id_migo = '$id'")[0];
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -127,57 +137,37 @@ if ($level !== "penjual") {
     </style>
 
 
-    <title>Admin Page</title>
+    <title>Edit Product || Admin</title>
 </head>
 
 <body>
     <div class="container">
         <div class="column">
-            <h1 class="title-judul">Welcome <?= $_SESSION["username"]; ?></h1>
+            <h2 class="title-judul"><?= strtoupper($_SESSION["username"]); ?> Please Edit a Product!</h2>
             <a href="logout.php">Logout</a>
+            <br>
+            <br>
+            <a href="../admin.php">Go Back</a>
             <p>You Level is: <?= $_SESSION["level"]; ?></p>
             <small>Please Create Product</small>
         </div>
 
         <div class="form-create-product">
             <form method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id_migo" value="<?= $detail["id_migo"] ?>">
                 <label for="nama">Product Name</label>
-                <input type="text" name="nama" id="nama" class="input_control" placeholder="Migo VOLTA 302">
+                <input type="text" name="nama" id="nama" class="input_control" value="<?= $detail["nama"]; ?>">
                 <label for="harga">Price</label>
-                <input type="text" name="harga" id="harga" class="input_control" placeholder="400.000">
+                <input type="text" name="harga" id="harga" class="input_control" value="<?= $detail["harga"]; ?>">
                 <label for="stock">Stock Product</label>
-                <input type="number" name="stock" id="stock" class="input_control" placeholder="2">
-                <label for="gambar">Image</label>
-                <input type="file" name="gambar" id="gambar">
+                <input type="number" name="stock" id="stock" class="input_control" value="<?= $detail["stock"]; ?>">
+                <label for="image">Image</label>
+                <input type="file" name="gambar" id="gambar" <?= $detail["gambar"]; ?>>
                 <label for="deskripsi">Description</label>
-                <textarea name="deskripsi" id="deskripsi" class="input_control" cols="20" rows="7" placeholder="lorem ipsum...."></textarea>
-                <button type="submit" name="product" class="btn-product">Create Product</button>
+                <textarea name="deskripsi" id="deskripsi" class="input_control" cols="20" rows="7"><?= $detail["deskripsi"]; ?></textarea>
+                <button type="submit" name="editProduct" class="btn-product">Edit Product</button>
             </form>
         </div>
-
-        <h2>Your Product</h2>
-        <hr>
-
-        <div class="column-card">
-            <?php foreach ($product as $item) : ?>
-                <div class="card-product">
-                    <a href="detail.php?id=1">
-                        <img src="assets/images/<?= $item["gambar"]; ?>" width="100%" height="50%" style="border-radius: 5px;" alt="Image Cat">
-                    </a>
-                    <div style="display: flex; justify-content: space-between;">
-                        <h3><?= $item["nama"]; ?></h3>
-                        <h4>Stock: <?= $item["stock"]; ?></h4>
-                    </div>
-                    <p>Rp. <?= $item["harga"]; ?></p>
-                    <p><?= $item["deskripsi"]; ?></p>
-                    <div class="action-product">
-                        <a href="edit-admin.php?id=<?= $item["id_migo"]; ?>" class="edit-product">Edit</a>
-                        <a href="hapus-admin.php?id=<?= $item["id_migo"]; ?>" onclick="alert('Are you sure delete product <?= $item['nama']; ?>?');" class="hapus-product">Hapus</a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-
 
     </div>
 </body>

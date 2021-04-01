@@ -15,17 +15,7 @@ handlePlus.addEventListener("click", function () {
 	harga.textContent = concuren;
 	updateCount();
 });
-handleMin.addEventListener("click", function () {
-	if (count <= 2) {
-		handleMin.classList.toggle("hidden");
-	} else if (count == 1) {
-		handleMin.classList.toggle("hidden");
-	}
-	const hasil = new Intl.NumberFormat("id-ID");
-	const concuren = hasil.format(count-- * updateHarga-- - 2);
-	harga.textContent = concuren;
-	updateCount();
-});
+handleMin.classList.toggle("hidden");
 
 btnCart.addEventListener("click", function () {
 	cart.textContent = count;

@@ -34,10 +34,8 @@ $migoDetail = queryData("SELECT * FROM products WHERE id_migo = $id")[0];
     ?>
     <section>
         <div class="container-detail">
-            <div class="parent-img">
-                <img src="./assets/images/<?= $migoDetail["image"]; ?>" width="80%" alt="Image <?= $migoDetail["nama"]; ?>">
-            </div>
-            <div class="parent-detail">
+            <img src="./assets/images/<?= $migoDetail["gambar"]; ?>" width="40%" alt="Image <?= $migoDetail["nama"]; ?>">
+            <div class="parent-detail" style="margin-left: 100px;">
                 <h2 class="title-detail"><?= $migoDetail["nama"]; ?></h2>
                 <p class="paragraph-detail"><?= $migoDetail["deskripsi"]; ?></p>
                 <div class="quantity-detail">
