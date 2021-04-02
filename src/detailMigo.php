@@ -40,19 +40,20 @@ $migoDetail = queryData("SELECT * FROM products WHERE id_migo = $id")[0];
                 <p class="paragraph-detail"><?= $migoDetail["deskripsi"]; ?></p>
                 <div class="quantity-detail">
                     <h4>Stock</h4>
-                    <div class="parent-qty">
-                        <button type="button" id="handleplus">+</button>
-                        <span class="counter-display">0</span>
-                        <button type="button" id="handlemin">-</button>
-                    </div>
-                    <div style="display: flex;">
-                        <span style="margin-top: 22px; font-weight: bold;">Rp.</span>
-                        <h3 style="margin-top: 20px;" id="harga"><?= $migoDetail["harga"]; ?></h3>
-                    </div>
-                    <?php if (isset($_SESSION["signin"])) : ?>
-                        <a href="beli.php?id=<?= $migoDetail["id_migo"]; ?>">Beli</a>
+                    <form method="post">
 
-                    <?php endif; ?>
+                        <div class="parent-qty">
+                            <input type="number" min="1" class="form-control" name="jumlah">
+                        </div>
+                        <div style="display: flex;">
+                            <span style="margin-top: 22px; font-weight: bold;">Rp.</span>
+                            <h3 style="margin-top: 20px;" id="harga"><?= number_format($migoDetail["harga"]); ?></h3>
+                        </div>
+                        <?php if (isset($_SESSION["signin"])) : ?>
+                            <button type="submit" name="beli">Beli</button>
+                        <?php endif; ?>
+                    </form>
+
                     <?php if (!isset($_SESSION["signin"])) : ?>
                         <a href="signin.php" class="btn-tocart">Login Dulu!</a>
                     <?php endif; ?>
@@ -60,6 +61,15 @@ $migoDetail = queryData("SELECT * FROM products WHERE id_migo = $id")[0];
             </div>
         </div>
     </section>
+
+    <?php
+    if (isset($_POST["beli"])) {
+        $jumlah = $_POST["jumlah"];
+        $_SESSION["cart"][$id] = $jumlah;
+        echo "<script>alert('Produk telah ditambahkan ke keranjang belanja')</script>";
+        echo "<script>location='cart.php'</script>";
+    }
+    ?>
 
     <script src="./assets/js/counter.js">
 

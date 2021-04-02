@@ -14,7 +14,6 @@ if (isset($_POST["signin"])) {
     // logic login disini
     $username = $_POST["username"];
     $password = $_POST["password"];
-    $refresh = header("Location: signin.php");
 
     $result = mysqli_query($dbconnect, "SELECT * FROM users WHERE username = '$username' ");
 
@@ -32,11 +31,11 @@ if (isset($_POST["signin"])) {
                 $_SESSION["level"] = "pembeli";
                 $_SESSION["signin"] = true;
                 header("Location: index.php");
-            } else {
-                header("Location: signin.php");
             }
         }
     }
+
+    $error = true;
 }
 
 
@@ -61,8 +60,10 @@ if (isset($_POST["signin"])) {
         <div class="card">
             <h4 style="text-align: center;"><a href="index.php" style="text-decoration: none; color: #000;">Lets Migo</a></h4>
             <h2 style="text-align: center;">Login Dulu</h2>
-
-            <form action="" method="POST">
+            <?php if (isset($error)) : ?>
+                <?php echo "<script>alert('Gagal Login!');</script>"; ?>
+            <?php endif; ?>
+            <form method="POST">
                 <div class="parent">
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" class="input-control" placeholder="Jhon Doe">
@@ -77,6 +78,7 @@ if (isset($_POST["signin"])) {
                     <p style="margin-top: 13px; margin-left: 20px;">Belum punya akun? <a href="signup.php" style="text-decoration: none; color: blue;">Daftar disini</a></p>
                 </div>
             </form>
+
         </div>
     </div>
 

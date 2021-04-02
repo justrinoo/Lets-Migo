@@ -79,7 +79,7 @@ if (isset($_POST["signup"])) {
                 </div>
                 <div class="parent-btn">
                     <button type="submit" name="signup" style="margin-left: 10px;" class="btn-signup">Sign Up</button>
-                    <span onclick="adminFunc()" style="margin-left: 10px; color: gray; cursor: default;">*</span>
+                    <span onclick="adminFunc()" style="margin-left: 10px; color: gray; cursor: default;">.</span>
                     <button type="submit" name="signupAdmin" style="margin-left: 10px; display:none;" id="btn-admin" class="btn-admin">Create Admin :V</button>
                     <p style="margin-top: 13px; margin-left: 20px;">Sudah punya akun? <a href="signin.php" style="text-decoration: none; color: blue;">Login disini</a></p>
                 </div>

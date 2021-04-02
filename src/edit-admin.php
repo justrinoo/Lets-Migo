@@ -147,7 +147,7 @@ $detail = queryData("SELECT * FROM products WHERE id_migo = '$id'")[0];
             <a href="logout.php">Logout</a>
             <br>
             <br>
-            <a href="../admin.php">Go Back</a>
+            <a href="admin.php">Go Back</a>
             <p>You Level is: <?= $_SESSION["level"]; ?></p>
             <small>Please Create Product</small>
         </div>

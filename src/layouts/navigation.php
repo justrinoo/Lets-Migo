@@ -14,15 +14,15 @@
             <li class="item-nav">
                 <a href="tech.php" class="nav-brand">Tech</a>
             </li>
+            <li class="item-nav">
+                <a href="cart.php" class="nav-brand"><b>Your Cart</b></a>
             </li>
         </ul>
     </div>
     <div class="child-nav">
         <?php if (isset($_SESSION["signin"])) : ?>
             <ul class="list-nav">
-                <li class="item-nav">
-                    Keranjang: <span id="count-cart"></span>
-                </li>
+
                 <li class="item-nav">
                     <a href="logout.php" class="nav-brand-auth-masuk">Logout</a>
                 </li>
