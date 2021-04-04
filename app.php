@@ -193,3 +193,27 @@ function deleteProduct($id)
     mysqli_query($dbconnect, "DELETE FROM products WHERE id_migo = $id");
     return mysqli_affected_rows($dbconnect);
 }
+
+function deleteCart($id)
+{
+    global $dbconnect;
+
+    mysqli_query($dbconnect, "DELETE FROM products WHERE id_migo = $id");
+    return mysqli_affected_rows($dbconnect);
+}
+
+
+function checkoutProduct($data)
+{
+    global $dbconnect;
+
+    $pengiriman = $data["pengiriman"];
+    $pembayaran = $data["pembayaran"];
+    $alamat = $data["alamat"];
+    $queryCheckout = "INSERT INTO checkout VALUES(id_checkout,'$alamat','$pengiriman','$pembayaran',createdAt)";
+    mysqli_query($dbconnect, $queryCheckout);
+    unset($_SESSION['cart']);
+    return mysqli_affected_rows($dbconnect);
+    //Mengosongkan tampilan keranjang setelah proises checkout selesai//
+
+}

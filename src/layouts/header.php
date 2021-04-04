@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/checkout-product.css">
+    <link rel="stylesheet" href="./assets/css/cart.css">
 
     <title>Lets Migo</title>
 </head>

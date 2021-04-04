@@ -23,11 +23,15 @@ if (isset($_POST["signin"])) {
             // cek role masing masing user
             if ($row["level"] === "penjual") {
                 $_SESSION["username"] = $username;
+                $_SESSION["no_telp"] = $row["no_telp"];
                 $_SESSION["level"] = "penjual";
+                $_SESSION["id_pembeli"] = $row["id"];
                 $_SESSION["signin"] = true;
                 header("Location: admin.php");
             } else if ($row["level"] === "pembeli") {
                 $_SESSION["username"] = $username;
+                $_SESSION["no_telp"] = $row["no_telp"];
+                $_SESSION["id_pembeli"] = $row["id"];
                 $_SESSION["level"] = "pembeli";
                 $_SESSION["signin"] = true;
                 header("Location: index.php");

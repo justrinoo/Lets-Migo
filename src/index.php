@@ -38,15 +38,13 @@ require_once("../src/layouts/navigation.php");
                         <img src="./assets/images/<?= $migo["gambar"]; ?>" width="100%" alt="" style="border: 1px solid #ddd; border-radius: 5px;">
                     </a>
                     <div style="padding: 10px; display: flex; align-items: center;justify-content: space-between;">
-                        <h3><?= $migo["nama"]; ?></h3>
+                        <h3 style="  width: 200px; white-space: nowrap;overflow: hidden; text-overflow: ellipsis;"><?= $migo["nama"]; ?></h3>
                         <h3>Rp <?= number_format($migo["harga"]); ?></h3>
                     </div>
                     <div style="padding: 0px 10px 0px 10px; margin-top: 10px; ">
                         <h4>Stok Migo Tersedia: <?= $migo["stock"]; ?></h4>
                         <p style="margin-top: 10px;">Deskripsi:<?= $migo["deskripsi"]; ?></p>
                     </div>
-
-                    <a href="beli.php?id=<?= $migo["id_migo"]; ?>">Masukan Keranjang</a>
 
                 </div>
 

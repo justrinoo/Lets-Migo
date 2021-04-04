@@ -43,7 +43,7 @@ $migoDetail = queryData("SELECT * FROM products WHERE id_migo = $id")[0];
                     <form method="post">
 
                         <div class="parent-qty">
-                            <input type="number" min="1" class="form-control" name="jumlah">
+                            <input type="number" min="1" class="form-control" name="jumlah" value="1">
                         </div>
                         <div style="display: flex;">
                             <span style="margin-top: 22px; font-weight: bold;">Rp.</span>

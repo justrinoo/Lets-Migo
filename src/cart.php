@@ -29,7 +29,9 @@ if (empty($_SESSION["cart"] || isset($_SESSION["cart"]))) {
         <div class="parent-left">
             <div style="display: flex; justify-content: space-between;">
                 <h2>Keranjang</h2>
-                <a href="checkout.php" style="margin-top: 7px; text-decoration: none; color: #fff; font-weight: bold; background: #000; padding: 6px; margin: 2px; border-radius: 10px;">Bayar Sekarang</a>
+
+                <a href="checkout-product.php" style="margin-top: 7px; text-decoration: none; color: #fff; font-weight: bold; background: #000; padding: 6px; margin: 2px; border-radius: 10px;">Bayar Sekarang</a>
+
             </div>
             <hr>
 
@@ -37,6 +39,7 @@ if (empty($_SESSION["cart"] || isset($_SESSION["cart"]))) {
                 <?php
                 $data = queryData("SELECT * FROM products WHERE id_migo = $productId")[0];
                 $subtotalHarga = $hasil * $data["harga"];
+
                 ?>
                 <div class="card-cart">
                     <img src="assets/images/<?= $data["gambar"]; ?>" width="20%" alt="">
@@ -46,8 +49,7 @@ if (empty($_SESSION["cart"] || isset($_SESSION["cart"]))) {
                         <h4 style="margin-top: 10px;">Pembeli: <?= $_SESSION["username"]; ?></h4>
                         <h4 style="margin-top: 10px;">Total Harga: Rp <?= number_format($subtotalHarga); ?></h4>
                         <div class="action-cart">
-                            <a href="">Hapus</a>
-                            <input type="number" min="1">
+                            <a href="cart-delete.php?id=<?= $data["id_migo"]; ?>">Hapus</a>
                         </div>
                     </div>
                 </div>
