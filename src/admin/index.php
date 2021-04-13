@@ -1,5 +1,5 @@
 <?php
-require('../app.php');
+require('../../app.php');
 session_start();
 
 if (!isset($_SESSION["signin"])) {
@@ -13,7 +13,7 @@ if (isset($_POST["product"])) {
         echo "
             <script>
                 alert('Success Create a Product!');
-                location='admin.php';
+                location='index.php';
             </script>
         ";
     } else {
@@ -21,13 +21,13 @@ if (isset($_POST["product"])) {
     }
 }
 
-$product = queryData("SELECT * FROM products");
+
 
 $level = $_SESSION["level"];
 
 if ($level !== "penjual") {
     echo "<script>alert('You cannot permission!');</script>";
-    echo "<script>location='index.php'</script>";
+    echo "<script>location=' ../index.php'</script>";
 }
 
 ?>
@@ -85,44 +85,17 @@ if ($level !== "penjual") {
             cursor: pointer;
         }
 
-        .column-card {
+
+        .nav-menu {
             display: flex;
-            flex-wrap: wrap;
-            gap: 4rem;
+            justify-content: space-around;
         }
 
-        .card-product {
-            background-color: darkslateblue;
-            padding: 10px;
-            width: 18rem;
-            margin: 4px;
-            border-radius: 5px;
-            font-family: "Poppins", sans-serif;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .action-product {
-            text-align: center;
-            color: #FFFFFF;
+        .nav-menu a {
             text-decoration: none;
-        }
-
-        .action-product a {
-            color: #FFFFFF;
-            text-decoration: none;
-        }
-
-        .action-product .edit-product {
-            color: black;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .action-product .hapus-product {
-            color: gray;
-            font-weight: bold;
-            text-decoration: none;
+            color: #000;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
         }
     </style>
 
@@ -132,9 +105,13 @@ if ($level !== "penjual") {
 
 <body>
     <div class="container">
+        <div class="nav-menu">
+            <a href="product.php">List Product</a>
+            <a href="order.php">List Order</a>
+        </div>
         <div class="column">
             <h1 class="title-judul">Welcome <?= $_SESSION["username"]; ?></h1>
-            <a href="logout.php">Logout</a>
+            <a href="../logout.php">Logout</a>
             <p>You Level is: <?= $_SESSION["level"]; ?></p>
             <small>Please Create Product</small>
         </div>
@@ -154,30 +131,6 @@ if ($level !== "penjual") {
                 <button type="submit" name="product" class="btn-product">Create Product</button>
             </form>
         </div>
-
-        <h2>Your Product</h2>
-        <hr>
-
-        <div class="column-card">
-            <?php foreach ($product as $item) : ?>
-                <div class="card-product">
-                    <a href="detail.php?id=1">
-                        <img src="assets/images/<?= $item["gambar"]; ?>" width="100%" height="50%" style="border-radius: 5px;" alt="Image Cat">
-                    </a>
-                    <div style="display: flex; justify-content: space-between;">
-                        <h3><?= $item["nama"]; ?></h3>
-                        <h4>Stock: <?= $item["stock"]; ?></h4>
-                    </div>
-                    <p>Rp. <?= $item["harga"]; ?></p>
-                    <p><?= $item["deskripsi"]; ?></p>
-                    <div class="action-product">
-                        <a href="edit-admin.php?id=<?= $item["id_migo"]; ?>" class="edit-product">Edit</a>
-                        <a href="hapus-admin.php?id=<?= $item["id_migo"]; ?>" onclick="alert('Are you sure delete product <?= $item['nama']; ?>?');" class="hapus-product">Hapus</a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-
 
     </div>
 </body>

@@ -97,9 +97,24 @@ function createProduct($data)
         return false;
     }
 
+    $product = "SELECT * FROM products WHERE nama = '$nama'";
+    $getProduct =  mysqli_query($dbconnect, $product);
+
+    if (mysqli_fetch_assoc($getProduct)) {
+        echo "
+            <script>
+                alert('Maaf data sudah ditambahkan!');
+            </script>
+        ";
+        return false;
+    }
+
     $queryCreateProduct = "INSERT INTO products VALUES(id_migo,'$nama','$harga','$image','$stock','$deskripsi',createdAt)";
 
+
+
     mysqli_query($dbconnect, $queryCreateProduct);
+
     return mysqli_affected_rows($dbconnect);
 }
 
@@ -160,7 +175,7 @@ function uploadImage()
     $newFileImage .= $ekstensiImage;
 
     // ketika filenya berhasil lolos semua validasi
-    move_uploaded_file($tmpName, 'assets/images/' . $newFileImage);
+    move_uploaded_file($tmpName, '../assets/images/' . $newFileImage);
     return $newFileImage;
 }
 
@@ -203,17 +218,47 @@ function deleteCart($id)
 }
 
 
-function checkoutProduct($data)
+function checkout($data)
 {
     global $dbconnect;
-
-    $pengiriman = $data["pengiriman"];
-    $pembayaran = $data["pembayaran"];
+    $nama_pembeli = $data["nama_pembeli"];
+    $no_telp = $data["no_telp"];
+    $nama_kota = $data["nama_kota"];
+    $kode_pos = $data["kode_pos"];
+    $jenis_pengiriman = $data["jenis_pengiriman"];
+    $jenis_pembayaran = $data["jenis_pembayaran"];
     $alamat = $data["alamat"];
-    $queryCheckout = "INSERT INTO checkout VALUES(id_checkout,'$alamat','$pengiriman','$pembayaran',createdAt)";
+    $waktuBelanja = date("Y-m-d h:m:s");
+
+    $queryDataPembeli = "SELECT * FROM checkout WHERE nama_pembeli = '$nama_pembeli'";
+    $resultPembeli = mysqli_query($dbconnect, $queryDataPembeli);
+    if (mysqli_fetch_assoc($resultPembeli)) {
+        echo "
+            <script>
+                alert('Maaf orderan sudah ada dengan nama tersebut!');
+            </script>
+        ";
+        return false;
+    }
+    $queryCheckout = "INSERT INTO checkout VALUES(id_checkout,'$nama_pembeli','$no_telp','$nama_kota','$alamat','$kode_pos','$jenis_pengiriman','$jenis_pembayaran',status,'$waktuBelanja')";
     mysqli_query($dbconnect, $queryCheckout);
+
     unset($_SESSION['cart']);
     return mysqli_affected_rows($dbconnect);
-    //Mengosongkan tampilan keranjang setelah proises checkout selesai//
+}
 
+function acceptOrder($id)
+{
+    global $dbconnect;
+    $queryAccept = "UPDATE checkout SET status = 'accept' WHERE id_checkout = $id";
+    mysqli_query($dbconnect, $queryAccept);
+    return mysqli_affected_rows($dbconnect);
+}
+
+function rejectProduct($id)
+{
+    global $dbconnect;
+    $queryReject = "UPDATE checkout SET status = 'reject' WHERE id_checkout = $id";
+    mysqli_query($dbconnect, $queryReject);
+    return mysqli_affected_rows($dbconnect);
 }

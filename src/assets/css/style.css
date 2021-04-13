@@ -75,6 +75,10 @@
 .detail-cart {
 	display: flex;
 }
+.card-history {
+	padding: 20px;
+	background-color: gray;
+}
 .footer {
 	padding: 10px;
 	background: black;

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('../app.php');
+require('../../app.php');
 
 if (!isset($_SESSION["signin"])) {
     // jika session nya tidak ada
@@ -13,7 +13,7 @@ if (isset($_POST["editProduct"])) {
         echo "
             <script>
                 alert('Yeayy, Success Edit a Product');
-                location='admin.php';
+                location='index.php';
             </script>
         ";
     } else {
@@ -147,7 +147,7 @@ $detail = queryData("SELECT * FROM products WHERE id_migo = '$id'")[0];
             <a href="logout.php">Logout</a>
             <br>
             <br>
-            <a href="admin.php">Go Back</a>
+            <a href="./admin/index.php">Go Back</a>
             <p>You Level is: <?= $_SESSION["level"]; ?></p>
             <small>Please Create Product</small>
         </div>

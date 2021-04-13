@@ -2,6 +2,7 @@
 
 require('../app.php');
 session_start();
+
 if (empty($_SESSION["cart"]) || !isset($_SESSION["cart"])) {
     echo "<script>
         alert('Keranjang anda kosong nih, belanja dulu yuk!');
@@ -9,8 +10,26 @@ if (empty($_SESSION["cart"]) || !isset($_SESSION["cart"])) {
     </script>";
 }
 
+$checkoutId = $_SESSION["cart"];
+
 if (!isset($_SESSION["signin"])) {
     header("Location: index.php");
+}
+
+if (isset($_POST["checkout"])) {
+    if (checkout($_POST) > 0) {
+        echo "<script>
+        alert('Terima kasih anda sudah membeli produk dari kami!');
+        alert('Semoga senang ya dengan produknya!');
+        location='history-order.php';
+    </script>";
+    } else {
+        //     echo "<script>
+        //     alert('Mohon maaf gagal membuat checkout! cek lagi yu!');
+        //     location='checkout-product.php';
+        // </script>";
+        echo mysqli_error($dbconnect);
+    }
 }
 
 ?>
@@ -33,36 +52,54 @@ if (!isset($_SESSION["signin"])) {
             <form method="post">
                 <div class="form-group">
                     <label for="nama_penerima">Nama Penerima</label>
-                    <input type="text" class="form-control" value="<?= strtoupper($_SESSION["username"]); ?>" readonly>
+                    <input type="text" class="form-control" name="nama_pembeli" placeholder="Jhon Doe">
+                </div>
+                <div class="form-group">
+                    <label for="no_telp">Nomor Telephone</label>
+                    <input type="text" class="form-control" name="no_telp" placeholder="08472785826">
+                </div>
+                <div class="form-group">
+                    <label for="Kota">Kota</label>
+                    <select name="nama_kota" id="nama_kota" class="form-control">
+                        <option hidden>Pilih Kota</option>
+                        <option value="Jakarta">Jakarta</option>
+                        <option value="Aceh">Aceh</option>
+                        <option value="Bali">Bali</option>
+                        <option value="Bandung">Bandung</option>
+                        <option value="Bojong Gede">Bojong Gede</option>
+                        <option value="Medan">Medan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="kode_pos">Kode Pos</label>
+                    <input type="text" class="form-control" id="kode_pos" name="kode_pos" placeholder="11250">
                 </div>
                 <div class="form-group">
                     <label for="pengiriman">Pengiriman</label>
-                    <select name="pengiriman" id="pengiriman" class="form-control">
+                    <select name="jenis_pengiriman" id="jenis_pengiriman" class="form-control">
                         <option hidden>Pilih Pengiriman</option>
-                        <option value="instan">instan</option>
-                        <option value="medium">medium</option>
-                        <option value="premium">premium</option>
+                        <option value="Instant">Instant</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Premium">Premium</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="pembayaran">Pembayaran</label>
-                    <select name="pembayaran" id="pembayaran" class="form-control">
+                    <select name="jenis_pembayaran" id="jenis_pembayaran" class="form-control">
                         <option hidden>Pilih Pembayaran</option>
                         <option value="COD">COD</option>
-                        <option value="Alfamart">Alfamart</option>
-                        <option value="Indomart">Indomart</option>
+                        <option value="Gopay">Gopay</option>
+                        <option value="Ovo">Ovo</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="alamat">Alamat</label>
-                    <textarea name="alamat" id="alamat" cols="20" rows="0" class="form-control"></textarea>
+                    <textarea name="alamat" id="alamat" cols="20" rows="0" class="form-control" placeholder="Masukan alamat anda dan jangan sampai salah ya!"></textarea>
                 </div>
+
                 <button type="submit" name="checkout" class="btn-checkout">Checkout</button>
             </form>
         </div>
-
-
-
 
         <div class="card-billings">
             <h3>Summary</h3>
@@ -75,7 +112,7 @@ if (!isset($_SESSION["signin"])) {
                     ?>
                     <div class="price-billings">
                         <span>
-                            <p style="  width: 300px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis"><?= $data["nama"]; ?></p> (<?= $result; ?> Produk)
+                            <p style=" width: 300px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis"><?= $data["nama"]; ?></p> (<?= $result; ?> Produk)
                         </span>
                         <span>Rp <?= number_format($totalHarga); ?></span>
 
@@ -88,21 +125,7 @@ if (!isset($_SESSION["signin"])) {
                     <span>Rp <?= number_format($totalBelanja); ?></span>
                 </div>
 
-                <!-- Logic Checkout -->
-                <?php
-                if (isset($_POST["checkout"])) {
-                    if (checkoutProduct($_POST) > 0) {
-                        echo "
-                                <script>
-                                    alert('Pembelian sukses!');
-                                    location='index.php';
-                                </script>
-                            ";
-                    } else {
-                        echo mysqli_error($dbconnect);
-                    }
-                }
-                ?>
+
             </div>
         </div>
     </div>

@@ -5,6 +5,8 @@ require("../app.php");
 if (empty($_SESSION["cart"] || isset($_SESSION["cart"]))) {
     echo "<script>alert('Keranjang kosong, silahkan berbelanja terlebih dahulu');</script>";
     echo "<script>location='index.php';</script>";
+} else if (!isset($_SESSION["cart"])) {
+    echo "<script>location='index.php';</script>";
 }
 ?>
 <!DOCTYPE html>
@@ -39,7 +41,6 @@ if (empty($_SESSION["cart"] || isset($_SESSION["cart"]))) {
                 <?php
                 $data = queryData("SELECT * FROM products WHERE id_migo = $productId")[0];
                 $subtotalHarga = $hasil * $data["harga"];
-
                 ?>
                 <div class="card-cart">
                     <img src="assets/images/<?= $data["gambar"]; ?>" width="20%" alt="">

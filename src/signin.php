@@ -10,12 +10,11 @@ if (isset($_SESSION["signin"])) {
 }
 
 if (isset($_POST["signin"])) {
-
     // logic login disini
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $result = mysqli_query($dbconnect, "SELECT * FROM users WHERE username = '$username' ");
+    $result = mysqli_query($dbconnect, "SELECT * FROM users WHERE username = '$username'");
 
     if (mysqli_num_rows($result) === 1) {
         $row = mysqli_fetch_assoc($result);
@@ -27,7 +26,7 @@ if (isset($_POST["signin"])) {
                 $_SESSION["level"] = "penjual";
                 $_SESSION["id_pembeli"] = $row["id"];
                 $_SESSION["signin"] = true;
-                header("Location: admin.php");
+                header("Location: ./admin/index.php");
             } else if ($row["level"] === "pembeli") {
                 $_SESSION["username"] = $username;
                 $_SESSION["no_telp"] = $row["no_telp"];

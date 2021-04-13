@@ -15,7 +15,8 @@
                 <a href="tech.php" class="nav-brand">Tech</a>
             </li>
             <li class="item-nav">
-                <a href="cart.php" class="nav-brand"><b>Your Cart</b></a>
+                <a href="cart.php" class="nav-brand">Cart</a>
+                <a href="history-order.php" class="nav-brand" style="margin-left: 10px;"><b>Your Order</b></a>
             </li>
         </ul>
     </div>

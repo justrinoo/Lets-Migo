@@ -65,7 +65,13 @@ $migoDetail = queryData("SELECT * FROM products WHERE id_migo = $id")[0];
     <?php
     if (isset($_POST["beli"])) {
         $jumlah = $_POST["jumlah"];
-        $_SESSION["cart"][$id] = $jumlah;
+
+        $product = $_SESSION["cart"][$id] = $jumlah;
+        if ($product >= 10) {
+            unset($_SESSION["cart"][$id]);
+            echo "<script>alert('Maaf produk terlalu banyak untuk ditambahkan!')</script>";
+            echo "<script>location='index.php'</script>";
+        }
         echo "<script>alert('Produk telah ditambahkan ke keranjang belanja')</script>";
         echo "<script>location='cart.php'</script>";
     }

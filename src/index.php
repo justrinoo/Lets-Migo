@@ -12,7 +12,7 @@ $level = $_SESSION["level"];
 
 if ($level !== "pembeli") {
     echo "<script>alert('You cannot permission!');</script>";
-    echo "<script>location='admin.php'</script>";
+    echo "<script>location='./admin/index.php'</script>";
 }
 require_once("../app.php");
 
@@ -33,7 +33,7 @@ require_once("../src/layouts/navigation.php");
         <div style="display: flex; ">
             <?php foreach ($productMigo as $migo) : ?>
 
-                <div class=" card-favorite-migo">
+                <div class="card-favorite-migo">
                     <a href="detailMigo.php?productId=<?= $migo["id_migo"]; ?>">
                         <img src="./assets/images/<?= $migo["gambar"]; ?>" width="100%" alt="" style="border: 1px solid #ddd; border-radius: 5px;">
                     </a>
